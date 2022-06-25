@@ -20,4 +20,21 @@ content-type: application/json
 ###delete recipe 
 DELETE http://localhost:8080/recipes/62b66fdffc6f94efb2f41fdc HTTP/1.1
 
-##
+###
+GET https://cse341-project22.herokuapp.com/recipes 
+
+###
+POST https://cse341-project22.herokuapp.com/recipes HTTP/1.1
+content-type: application/json
+
+{
+    "name":"Pap and Wors",
+    "category":"South African",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt", "wors"],
+    "prepTime":"15 minutes",
+    "cookTime":"20 minutes",
+    "servings":"16"
+}
+
+###
