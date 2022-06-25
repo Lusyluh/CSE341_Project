@@ -1,0 +1,19 @@
+//LOCALHOST
+###get all recipes
+GET http://localhost:8080/recipes
+
+###create one new recipe
+POST http://localhost:8080/recipes HTTP/1.1 
+content-type: application/json
+
+{
+    "name":"Pap",
+    "category":"South African",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime":"5 minutes",
+    "cookTime":"10 minutes",
+    "servings":"6"
+}
+
+###

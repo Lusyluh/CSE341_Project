@@ -13,23 +13,29 @@ const getAll = async (req, res) => {
 //maybe an image?
 
 const newRecipe = async (req, res) => {
-    
-    try {
+    //try {
         const recipe = {
             name: req.body.name,
             category: req.body.category,
-            description: req.body.description,
+            email: req.body.email,
+            ingredients: req.body.ingredients,
             prepTime: req.body.prepTime,
             cookTime: req.body.cookTime,
-            serving: req.body.serving
+            servings: req.body.servings
         }
         const result = await mongodb.getDb().db('recipeBook').collection('recipes').insertOne(recipe);
-        console.log(result);
-    } catch (error) {
-        res.status(500).send({message: error.message || 'Recipe could not be created'})
-    }
+        if (result.acknowledged) {
+            res.status(201).json(result);
+            console.log(result);
+            console.log(req.body.name);
+        }
+    //} catch (error) {
+        else {res.status(500).send({message: error.message || 'Recipe could not be created'})}
+    //}
 
-}
+};
+
+//delete 
 module.exports = {
     getAll, newRecipe
 };
