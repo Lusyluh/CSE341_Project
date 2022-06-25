@@ -1,0 +1,20 @@
+{
+  "recipe": {
+    "name": "Amasi",
+    "category": "South African",
+    "email": "recipetest@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime": "5 minutes",
+    "cookTime": "30 minutes",
+    "servings": "6"
+  },
+  "recipe2": {
+    "name": "Pancake",
+    "category": "American",
+    "email": "recipetest2@test.com",
+    "ingredients":[ "Milk", "butter", "salt", "castor sugar", "eggs"],
+    "prepTime": "5 minutes",
+    "cookTime": "15 minutes",
+    "servings":"10"
+  }
+}
