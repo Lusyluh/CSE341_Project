@@ -5,12 +5,19 @@
     "description": "Recipe API",
     "version": "1.0.0"
   },
-  "host": "https://cse341-project22.herokuapp.com/",
+  "host": "https://cse341-project22.herokuapp.com",
   "basePath": "/",
   "schemes": [
     "https"
   ],
   "paths": {
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/recipes/": {
       "get": {
         "description": "",
