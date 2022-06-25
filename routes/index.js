@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+//connects to the swagger router
+router.use('/', require('./swagger'));
 //connect to the recipes router
 router.use('/recipes', require('./recipes'));
 
