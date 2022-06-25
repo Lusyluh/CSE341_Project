@@ -1,4 +1,5 @@
 const mongodb = require('../models/connect');
+const ObjectId = require('mongodb').ObjectId;
 
 //get all recipes listed in the database
 const getAll = async (req, res) => {
@@ -35,7 +36,17 @@ const newRecipe = async (req, res) => {
 
 };
 
-//delete 
+//delete the recipes
+const deleteRecipe = async (req, res) => {
+    const userId = new ObjectId(req.params.id);
+    const result = await mongodb.getDb().db('recipeBook').collection('recipes').deleteOne({ _id: userId }, true);
+    if (result.deletedCount > 0) {
+        res.status(204).send();
+        console.log("Successfully deleted one document.");
+      } else {
+        res.status(500).json(result.error || 'No documents matched the query. Deleted 0 documents.');
+      }
+}
 module.exports = {
-    getAll, newRecipe
+    getAll, newRecipe, deleteRecipe
 };
