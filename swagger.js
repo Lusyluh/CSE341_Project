@@ -5,7 +5,7 @@ const doc = {
     title: 'My recipe book API',
     description: 'Recipe API',
   },
-  host: 'https://cse341-project22.herokuapp.com',
+  host: 'cse341-project22.herokuapp.com',
   schemes: ['https'],
 };
 

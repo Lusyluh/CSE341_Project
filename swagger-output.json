@@ -5,7 +5,7 @@
     "description": "Recipe API",
     "version": "1.0.0"
   },
-  "host": "https://cse341-project22.herokuapp.com",
+  "host": "cse341-project22.herokuapp.com",
   "basePath": "/",
   "schemes": [
     "https"
