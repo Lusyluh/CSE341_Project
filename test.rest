@@ -21,6 +21,20 @@ content-type: application/json
 DELETE http://localhost:8080/recipes/62b66fdffc6f94efb2f41fdc HTTP/1.1
 
 ###
+PUT http://localhost:8080/recipes/62b6be03d2b9af95733b54b1  HTTP/1.1 
+content-type: application/json
+
+{
+    "name":"Pap",
+    "category":"Afrikaans",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime":"10 minutes",
+    "cookTime":"10 minutes",
+    "servings":"6"
+}
+
+###HEROKU 
 GET https://cse341-project22.herokuapp.com/recipes 
 
 ###
@@ -38,3 +52,15 @@ content-type: application/json
 }
 
 ###
+PUT https://cse341-project22.herokuapp.com/recipes/62b6be03d2b9af95733b54b1  HTTP/1.1 
+content-type: application/json
+
+{
+    "name":"Papa and chakalaka",
+    "category":"Afrikaans",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime":"10 minutes",
+    "cookTime":"10 minutes",
+    "servings":"6"
+}

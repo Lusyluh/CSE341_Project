@@ -46,7 +46,33 @@ const deleteRecipe = async (req, res) => {
       } else {
         res.status(500).json(result.error || 'No documents matched the query. Deleted 0 documents.');
       }
+};
+//update recipe, edit or replace
+const updateRecipe = async(req, res) => {
+    const userId = new ObjectId(req.params.id);
+    const recipe = {
+        name: req.body.name,
+        category: req.body.category,
+        email: req.body.email,
+        ingredients: req.body.ingredients,
+        prepTime: req.body.prepTime,
+        cookTime: req.body.cookTime,
+        servings: req.body.servings
+    }
+    const result = await mongodb.getDb().db('recipeBook').collection('recipes').replaceOne({ _id: userId}, recipe);
+    if(result.modifiedCount > 0){
+        res.status(204).send();
+        console.log('Update successful!');
+    }else{
+        res.status(500).json(result.error || 'Error occured while updating');
+    }
 }
+
+
+
+
+
+
 module.exports = {
-    getAll, newRecipe, deleteRecipe
+    getAll, newRecipe, deleteRecipe, updateRecipe
 };
