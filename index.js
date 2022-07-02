@@ -13,6 +13,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
   })
+//serve all files inside the public directory
+app.use(express.static(__dirname + "/public"));
 
 //connects to the endpoints under routes folder
 app.use('/', require('./routes'));

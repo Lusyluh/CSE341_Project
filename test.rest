@@ -8,7 +8,7 @@ content-type: application/json
 
 {
     "name":"Macaroni and Mince",
-    "category":9,
+    "category":"9",
     "email":"pap@gmail.com",
     "ingredients":[ "Boiling Water", "maize meal", "salt"],
     "prepTime":"5 minutes",
