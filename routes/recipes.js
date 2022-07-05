@@ -4,12 +4,8 @@ const router = express.Router();
 //connects to the controller
 const recipeController = require('../controllers/recipes');
 
-// //the user logs in
-// router.get('/login', (req, res) => {
-//   res.render('login');
-// })
 
-//now here are the endpoints
+//now here are the endpoints t get, post and update the recipes
 router.get('/', recipeController.getAll);
 router.post('/',recipeController.newRecipe);
 router.delete('/:id', recipeController.deleteRecipe);

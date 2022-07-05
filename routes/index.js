@@ -5,7 +5,7 @@ const router = express.Router();
 router.use('/', require('./swagger'));
 
 //authentication
-router.get('/google',recipeController.getAuth);
+router.use('/auth', require('./auth-routes'));
 
 //connect to the recipes router
 router.use('/recipes', require('./recipes'));
