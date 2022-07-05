@@ -14,7 +14,7 @@ const getAuth = async (req, res) => {
         console.log('Error: ' + error.message);
     }
 }
-//
+//retrieve access token
 const getAccessToken = async (req, res) => {
     // ! get authorization token from request parameter
     const authorization_token = req.query.code;
@@ -22,15 +22,16 @@ const getAccessToken = async (req, res) => {
     try {
       // ! get access token using authorization token
       console.log('get in here');
-      const response = await utils.get_access_token (authorization_token.code);
-      console.log('get in here');
+      const response = await utils.get_access_token (authorization_token);
       console.log ({data: response.data});
   
       // get access token from payload to obtain the resource
       const {access_token} = response.data;
       console.log ({data: response.data});
+
+      
       //get user profile data
-      const user = await helpers.get_profile_data (access_token);
+      const user = await utils.get_profile_data (access_token);
       const user_data = user.data;
       res.send (`
         <h1> welcome ${user_data.name}</h1>

@@ -39,7 +39,7 @@ const get_access_token = async auth_code => {
     url: `${google_access_token_endpoint}?${new URLSearchParams(access_token_params)}`,
   });
 };
-//use the access token to obtain user's profile
+//use the access token to retrieve user's profile
 const get_profile_data = async access_token => {
   return await axios ({
     method: 'post',
