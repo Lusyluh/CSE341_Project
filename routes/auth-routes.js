@@ -13,9 +13,6 @@ router.get('/login', (req, res) => {
 router.get('/auth',authController.getAuth);
 
 //callback function to access authorization token
-router.get (process.env.REDIRECT_URI, async (req, res) => {
-  // ! get authorization token from request parameter
-  const authorization_token = req.query.code;
-});
+router.get (process.env.REDIRECT_URI, authController.getAccessToken);
 
 module.exports = router;
