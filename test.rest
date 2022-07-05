@@ -70,13 +70,3 @@ DELETE https://cse341-project22.herokuapp.com/recipes/62ba80e1843d3c40ca6a8281 H
 
 ###
 
-POST https://oauth2.googleapis.com/token HTTP/1.1
-Content-Type: application/json
-
-{
-  "code":"4/0AX4XfWjSukWnezP4mDWc-N9XSeI6pUWGDC2sAuYZWZiSORsxTH-zR9kzZUQn9zuBsvs20w",
-  "client_id": "969263349252-pdlegp85ao1nfcr9grvliic6q2hma8t1.apps.googleusercontent.com",
-  "client_secret":"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",
-  "redirect_uri":"http://localhost:8080/api/oauth-callback",
-  "grant_type":"authorization_code"
-}
