@@ -10,11 +10,10 @@ router.get('/login', (req, res) => {
 });
 
 //when user chooses to use google, then render authentication page
-router.get('/',authController.getAuth);
+router.get('/auth',authController.getAuth);
 
-//callback function after redirecting
-router.get("/auth",(req,res)=>{.....})
-rounter.get (process.env.REDIRECT_URI, async (req, res) => {
+//callback function to access authorization token
+router.get (process.env.REDIRECT_URI, async (req, res) => {
   // ! get authorization token from request parameter
   const authorization_token = req.query.code;
 });
