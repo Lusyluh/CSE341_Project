@@ -1,0 +1,72 @@
+//LOCALHOST
+###get all recipes
+GET http://localhost:8080/recipes
+
+###create one new recipe
+POST http://localhost:8080/recipes HTTP/1.1 
+content-type: application/json
+
+{
+    "name":"Macaroni and Mince",
+    "category":"9",
+    "email":"pap@gmail.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime":"5 minutes",
+    "cookTime":"10 minutes",
+    "servings":"6"
+}
+
+###
+###delete recipe 
+DELETE http://localhost:8080/recipes/62ba73ae30fff448987eeda7 HTTP/1.1
+
+###
+PUT http://localhost:8080/recipes/62b6be03d2b9af95733b54b1  HTTP/1.1 
+content-type: application/json
+
+{
+    "name":"Pap",
+    "category":"Afrikaans",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime":"10 minutes",
+    "cookTime":"10 minutes",
+    "servings":"6"
+}
+
+###HEROKU 
+GET https://cse341-project22.herokuapp.com/recipes 
+
+###
+POST https://cse341-project22.herokuapp.com/recipes HTTP/1.1
+content-type: application/json
+
+{
+    "name":"Pap and Nyama",
+    "category":"Indian",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt", "wors"],
+    "prepTime":"15 minutes",
+    "cookTime":"20 minutes",
+    "servings":"16"
+}
+
+###
+PUT https://cse341-project22.herokuapp.com/recipes/62b6be03d2b9af95733b54b1  HTTP/1.1 
+content-type: application/json
+
+{
+    "name":"Papa and Vleis",
+    "category":"Afrikaans",
+    "email":"pap@test.com",
+    "ingredients":[ "Boiling Water", "maize meal", "salt"],
+    "prepTime":"10 minutes",
+    "cookTime":"10 minutes",
+    "servings":"6"
+}
+
+###
+DELETE https://cse341-project22.herokuapp.com/recipes/62ba80e1843d3c40ca6a8281 HTTP/1.1
+
+###
+
