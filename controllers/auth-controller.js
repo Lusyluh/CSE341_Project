@@ -3,7 +3,14 @@ const mongodb = require('../models/connect');
 //connects to the utilities folder
 const utils = require('../auth/utils');
 
-console.log(utils.request_get_auth_code_url);
+//console.log(utils.request_get_auth_code_url);
+
+//user login
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
+
 
 const getAuth = async (req, res) => {
     try {
