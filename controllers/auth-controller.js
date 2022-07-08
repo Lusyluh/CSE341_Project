@@ -1,4 +1,5 @@
 const mongodb = require('../models/connect');
+const bcrypt = require('bcryptjs');
 
 //connects to the utilities folder
 const utils = require('../auth/utils');
