@@ -2,6 +2,7 @@ const mongodb = require('../models/connect');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 const hash = bcrypt.hashSync("B4c0/\/", salt);
+const {authSchema, userSchema} = require('../helpers/validation_schema');
 
 //connects to the utilities folder
 const utils = require('../auth/utils');
@@ -18,10 +19,10 @@ const getSignup = (req, res) => {
 
 //create new user
 const register = async (req, res) => {
-  const User = {
-    username: req.body.username,
+  const User = await userSchema.validateAsync({
+    email: req.body.email,
     password: req.body.password
-  }
+  });
   try{
     const newUser = await mongodb.getDb().db('recipeBook').collection('users').insertOne(User);
   if (newUser.acknowledged) {
@@ -39,7 +40,20 @@ const getLogin = async (req, res) => {
   res.render('login');
 };
 
-
+//handle the login - let the user login using email and password
+const userLogin = async (req, res) => {
+  const User = {
+    email: req.body.email,
+    password: req.body.password
+  }
+  const response = await mongodb.getDb().db('recipeBook').collection('users').find(User);
+  //if user already exist
+  if(!response){
+    //user not found
+    return res.status(401).send({ message: 'Wrong Username or Password' });
+  }
+  
+}
 
 
 

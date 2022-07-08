@@ -14,7 +14,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
   })
-//serve all files inside the vies directory
+//serve all files inside the views directory
 app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
 

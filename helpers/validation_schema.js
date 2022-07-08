@@ -16,8 +16,19 @@ const authSchema = Joi.object({
     cookTime: Joi.string().required(),
     servings: Joi.string().required()
 
+});
+
+const userSchema = Joi.object({
+    email: Joi.string()
+        .email({
+            minDomainSegments: 2,
+            tlds: {
+                allow: ['com', 'net']
+            }
+        }),
+    password: Joi.string().min(3).alphanum().required()
 })
 
 module.exports = {
-    authSchema
+    authSchema, userSchema
 };
