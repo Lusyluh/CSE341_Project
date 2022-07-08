@@ -4,14 +4,15 @@ const router = express.Router();
 //connects to the auth controller
 const authController = require('../controllers/auth-controller');
 
-//router for the user to login
-//router.get('/login', authController.getLogin);
 
 //get the signup form
 router.get('/register',authController.getSignup);
 
 //router for a create account option
 router.post('/register', authController.register);
+
+//router for the user to login
+router.get('/login', authController.getLogin);
 
 //when user chooses to use google, then render authentication page
 router.get('/auth',authController.getAuth);

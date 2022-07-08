@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
@@ -19,5 +20,8 @@ const userSchema = new Schema({
   }
     }
 })
+
+//hash the password using bcryptjs
+
 
 module.exports = mongoose.model('User', userSchema)

@@ -1,5 +1,7 @@
 const mongodb = require('../models/connect');
 const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
+const hash = bcrypt.hashSync("B4c0/\/", salt);
 
 //connects to the utilities folder
 const utils = require('../auth/utils');
@@ -7,7 +9,7 @@ const utils = require('../auth/utils');
 //connect to the models to get users
 const User = require('../models/user');
 
-//console.log(utils.request_get_auth_code_url);
+
 
 //render a signup form
 const getSignup = (req, res) => {
@@ -23,7 +25,7 @@ const register = async (req, res) => {
   try{
     const newUser = await mongodb.getDb().db('recipeBook').collection('users').insertOne(User);
   if (newUser.acknowledged) {
-    res.status(201).json({message: "registered succussfully"});
+    res.status(201).json({message: "User registered successfully"});
     console.log(req.body);
   }
 }catch(err){
@@ -31,6 +33,12 @@ const register = async (req, res) => {
   return res.render('sign-up');
 }
 };
+
+//render login form
+const getLogin = async (req, res) => {
+  res.render('login');
+};
+
 
 
 
@@ -78,5 +86,6 @@ module.exports = {
     getAuth,
     getAccessToken,
     getSignup,
-    register
+    register,
+    getLogin
 };
