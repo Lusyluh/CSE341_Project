@@ -69,3 +69,10 @@ content-type: application/json
 DELETE https://cse341-project22.herokuapp.com/recipes/62ba80e1843d3c40ca6a8281 HTTP/1.1
 
 ###
+POST http://localhost:8080/register HTTP/1.1 
+content-type: application/json
+
+{
+    "username":"luh@test",
+    "password":"1234569"
+}

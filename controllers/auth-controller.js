@@ -3,12 +3,34 @@ const mongodb = require('../models/connect');
 //connects to the utilities folder
 const utils = require('../auth/utils');
 
+//connect to the models to get users
+const User = require('../models/user');
+
 //console.log(utils.request_get_auth_code_url);
 
-//user login
-router.get('/login', (req, res) => {
-  res.render('login');
-});
+//render a signup form
+const getSignup = (req, res) => {
+  res.render('sign-up');
+};
+
+//create new user
+const register = async (req, res) => {
+  const User = {
+    username: req.body.username,
+    password: req.body.password
+  }
+  try{
+    const newUser = await mongodb.getDb().db('recipeBook').collection('users').insertOne(User);
+  if (newUser.acknowledged) {
+    res.status(201).json({message: "registered succussfully"});
+    console.log(req.body);
+  }
+}catch(err){
+  res.status(422).send(err.message);
+  return res.render('sign-up');
+}
+};
+
 
 
 
@@ -53,5 +75,7 @@ const getAccessToken = async (req, res) => {
 
 module.exports = {
     getAuth,
-    getAccessToken
+    getAccessToken,
+    getSignup,
+    register
 };

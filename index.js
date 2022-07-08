@@ -7,14 +7,16 @@ const app = express();
 const port = process.env.PORT || 8080
 
 // Configuring body parser middleware
-//app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
   })
-//serve all files inside the public directory
-app.use(express.static(__dirname + "/public"));
+//serve all files inside the vies directory
+app.use(express.static(__dirname + "/views"));
+app.set("view engine", "ejs");
 
 //connects to the endpoints under routes folder
 app.use('/', require('./routes'));
