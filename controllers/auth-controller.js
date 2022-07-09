@@ -14,8 +14,6 @@ const securePassword = require('../auth/securePassword');
 //connect to the models to get users
 const User = require('../models/user');
 
-
-
 //render a signup form
 const getSignup = (req, res) => {
   res.render('sign-up');
@@ -24,33 +22,46 @@ const getSignup = (req, res) => {
 //create new user
 const register = async (req, res, next) => {
   try {
-  //   const User = await userSchema.validateAsync({
-  //   email: req.body.email,
-  //   password: req.body.password
-  // });
-  
-    const existingUser = await mongodb.getDb().db('recipeBook').collection('users').findOne({email: req.body.email});
+    //   const User = await userSchema.validateAsync({
+    //   email: req.body.email,
+    //   password: req.body.password
+    // });
+
+    const existingUser = await mongodb.getDb()
+      .db('recipeBook').collection('users')
+      .findOne({
+        email: req.body.email
+      });
     if (existingUser) {
       res.status(403).json({
         message: "User already exists"
       });
-    }else{
+    } else {
       //secure the password
       const hashedPassword = await securePassword(req.body.password);
       const newUser = await mongodb.getDb()
-      .db('recipeBook')
-      .collection('users')
-      .insertOne({email: req.body.email,password:hashedPassword});
-      
+        .db('recipeBook')
+        .collection('users')
+        .insertOne({
+          email: req.body.email,
+          password: hashedPassword
+        });
+
       if (newUser) {
         res.status(201);
-				return res.json({message: "User created successfully!"});
-      }else{
-        res.status(403).json({error: "Error Creating User"});
+        return res.json({
+          message: "User created successfully!"
+        });
+      } else {
+        res.status(403).json({
+          error: "Error Creating User"
+        });
       }
     }
   } catch (error) {
-    res.status(400).json({error: 'User not added, please try again'});
+    res.status(400).json({
+      error: 'User not added, please try again'
+    });
   }
 };
 
@@ -61,47 +72,39 @@ const getLogin = async (req, res) => {
 
 //handle the login - let the user login using email and password
 const userLogin = async (req, res) => {
-  try{const User = {
-    email: req.body.email,
-    password: req.body.password
+  try {
+    const result = await mongodb.getDb()
+      .db('recipeBook')
+      .collection('users')
+      .findOne({
+        email: req.body.email
+      })
+    //user not found
+    if (!result) {
+      return res.status(404).send({
+        message: "Wrong Username or Password"
+      });
+    } else {
+      utils.is_logged_in = true;
+    }
+    //check the password
+    const hashedPassword = await securePassword(req.body.password);
+    //const isPasswordValid = hashedPassword === req.body.password;
+    const isPasswordValid = async (password, hash) => {
+      const resulting = await bcrypt.compare(req.body.password, result.password);
   }
-
-  const result = await mongodb.getDb()
-    .db('recipeBook')
-    .collection('users')
-    .findOne({
-      email: req.body.email
-    })
-      //user not found
-      if (!result) {
-        return res.status(404).send({
-          message: "Wrong Username or Password"
-        });
-      } else {
-        utils.is_logged_in = true;
-      }
-      //check the password
-      const isPasswordValid = req.body.password === result.password
-
-      if (!isPasswordValid) {
-        res.status(403).send({
-          error: 'password incorrect!'
-        })
-      }
-  }catch(err){
+    if (!isPasswordValid) {
+      res.status(403).send({
+        error: 'password incorrect!'
+      })
+    }
+  } catch (err) {
     res.status(500).send({
       error: 'Error has occured while trying to login'
     })
   }
-    
-}
 
-// // Check the password
-// user.comparePassword(password, (err, isMatch) => {
-//   if (!isMatch) {
-//     // Password does not match
-//     return res.status(401).send({ message: 'Wrong Username or password' });
-//   }
+}
 
 const getAuth = async (req, res) => {
   try {
