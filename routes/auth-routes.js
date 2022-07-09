@@ -6,7 +6,7 @@ const authController = require('../controllers/auth-controller');
 
 
 //get the signup form
-router.get('/register',authController.getSignup);
+router.get('/register', authController.getSignup);
 
 //router for a create account option
 router.post('/register', authController.register);
@@ -14,10 +14,13 @@ router.post('/register', authController.register);
 //router for the user to login
 router.get('/login', authController.getLogin);
 
+//post login 
+router.post('/login', authController.userLogin);
+
 //when user chooses to use google, then render authentication page
-router.get('/auth',authController.getAuth);
+router.get('/auth', authController.getAuth);
 
 //callback function to access authorization token
-router.get (process.env.REDIRECT_URI, authController.getAccessToken);
+router.get(process.env.REDIRECT_URI, authController.getAccessToken);
 
 module.exports = router;

@@ -29,6 +29,8 @@ const userSchema = Joi.object({
     password: Joi.string().min(3).alphanum().required()
 })
 
+
+
 module.exports = {
     authSchema, userSchema
 };

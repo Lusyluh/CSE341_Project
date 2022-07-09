@@ -1,6 +1,8 @@
 //imports the axios module to make http/https requests
 const axios = require('axios');
 
+let is_logged_in = false;
+
 //get accesstoken from google api
 const google_access_token_endpoint = 'https://oauth2.googleapis.com/token';
 
@@ -48,5 +50,6 @@ const get_profile_data = async access_token => {
 module.exports = {
   request_get_auth_code_url,
   get_access_token,
-  get_profile_data
+  get_profile_data,
+  is_logged_in
 };
