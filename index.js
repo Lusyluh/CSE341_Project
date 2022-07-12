@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const mongodb = require('./models/connect');
-const cookieSession = require('cookie-session');
+//const cookieSession = require('cookie-session');
+const session = require('express-session');
 const passport = require("passport");
 
 const port = process.env.PORT || 8080
@@ -23,9 +24,15 @@ app.set("view engine", "ejs");
 
 
 //use the cookie session
-app.use(cookieSession({
-  maxAge: 24*60*60*1000,
-  keys: [process.env.COOKIE_KEY]
+// app.use(cookieSession({
+//   maxAge: 24*60*60*1000,
+//   keys: [process.env.COOKIE_KEY]
+// }));
+app.use(session({
+  secret: process.env.COOKIE_KEY,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
 }));
 
 //passport middleware

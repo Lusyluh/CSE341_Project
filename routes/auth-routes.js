@@ -35,13 +35,12 @@ router.get('/google',
 passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 //callback function to access authorization token
-router.get(process.env.REDIRECT_URI,passport.authenticate('google', { failureRedirect: '/login'}),
-function(req, res) {
+router.get('/google/redirect',passport.authenticate('google'),
+(req, res) => {
   // Successful authentication, redirect success.
   res.send('you have reached the call back uri');
   //req.send(req.user);
   //res.redirect('api-docs');
-  
 });
 
 module.exports = router;

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //connects to the swagger router
-router.use('/api-docs', require('./swagger'));
+router.use('/', require('./swagger'));
 
 //authentication
 router.use('/auth', require('./auth-routes'));
