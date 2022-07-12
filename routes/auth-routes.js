@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 //connects to the auth controller
 const authController = require('../controllers/auth-controller');
@@ -33,10 +34,11 @@ router.get('/auth/google',
 passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 //callback function to access authorization token
-router.get(process.env.REDIRECT_URI,passport.authenticate('google', { failureRedirect: '/login' }),
+router.get(process.env.REDIRECT_URI,passport.authenticate('google', { failureRedirect: '/login', session:false}),
 function(req, res) {
   // Successful authentication, redirect success.
-  res.redirect('/success');
+  res.redirect('api-docs');
+  
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./models/connect');
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 const passport = require("passport");
 
 const app = express();
