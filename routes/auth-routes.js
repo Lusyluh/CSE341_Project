@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongodb = require('../models/connect');
 const passport = require('passport');
 
 //connects to the auth controller
@@ -30,14 +31,16 @@ router.post('/login', authController.userLogin);
 router.get('/logout', authController.signout);
 
 //when user chooses to use google, then render authentication page
-router.get('/auth/google', 
+router.get('/google', 
 passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 //callback function to access authorization token
-router.get(process.env.REDIRECT_URI,passport.authenticate('google', { failureRedirect: '/login', session:false}),
+router.get(process.env.REDIRECT_URI,passport.authenticate('google', { failureRedirect: '/login'}),
 function(req, res) {
   // Successful authentication, redirect success.
-  res.redirect('api-docs');
+  res.send('you have reached the call back uri');
+  //req.send(req.user);
+  //res.redirect('api-docs');
   
 });
 

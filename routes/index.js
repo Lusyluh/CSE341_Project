@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 //connects to the swagger router
-router.use('/', require('./swagger'));
+router.use('/api-docs', require('./swagger'));
 
 //authentication
-router.use('/', require('./auth-routes'));
+router.use('/auth', require('./auth-routes'));
 
 //connect to the recipes router
 router.use('/recipes', require('./recipes'));

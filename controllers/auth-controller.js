@@ -110,9 +110,6 @@ const signout = async (req, res) => {
   return res.redirect('/');
 };
 
-//authentication
-
-
 module.exports = {
   getSignup,
   register,
