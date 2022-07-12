@@ -1,10 +1,8 @@
 const mongodb = require('../models/connect');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
-const {
-  authSchema,
-  userSchema
-} = require('../middleware/userValidation');
+const jwt = require('jsonwebtoken');
+const {userValidation} = require('../middleware/userValidation');
 
 //connects to the utilities folder
 const utils = require('../auth/utils');
@@ -22,12 +20,12 @@ const getSignup = (req, res) => {
 const register = async (req, res, next) => {
 
   try {
-    //const User = await userSchema.validateAsync(req.body);
+    const value = await userValidation.validateAsync(req.body);
 
     const existingUser = await mongodb.getDb()
       .db('recipeBook').collection('users')
       .findOne({
-        email: req.body.email
+        email: value.email
       });
     if (existingUser) {
       res.status(403).json({
