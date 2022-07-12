@@ -2,7 +2,7 @@ const mongodb = require('../models/connect');
 const ObjectId = require('mongodb').ObjectId;
 
 //connects to the validation schema
-const {authSchema} = require('../middleware/userValidation');
+const {authSchema} = require('../middleware/authSchema');
 
 //get all recipes listed in the database
 const getAll = async (req, res) => {

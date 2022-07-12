@@ -8,9 +8,6 @@ const {userValidation} = require('../middleware/userValidation');
 const utils = require('../auth/utils');
 const securePassword = require('../auth/securePassword');
 
-//connect to the models to get users
-const User = require('../models/user');
-
 //render a signup form
 const getSignup = (req, res) => {
   res.render('sign-up');
@@ -105,26 +102,6 @@ const userLogin = async (req, res, next) => {
   }
 };
 
-//get all the registered users
-const getUsers = async (req, res, next) => {
-	try {
-		const allUsers = await mongodb.getDb()
-    .db('recipeBook')
-    .collection('users').find();
-		if (allUsers) {
-      allUsers.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists);});
-			
-		} else {
-			res.status(403);
-			return res.json({message: "Error getting Users"});
-		}
-	} catch (error) {
-		res.status(400);
-		return res.json({error: "Error getting user"});
-	}
-};
 
 //user logs out
 const signout = async (req, res) => {
@@ -134,60 +111,12 @@ const signout = async (req, res) => {
 };
 
 //authentication
-const getAuth = async (req, res) => {
-  try {
-    res.redirect(utils.request_get_auth_code_url);
 
-  } catch (error) {
-    res.sendStatus(500);
-    console.log('Error: ' + error.message);
-  }
-}
-//retrieve access token
-const getAccessToken = async (req, res) => {
-  // ! get authorization token from request parameter
-  const authorization_token = req.query.code;
-  console.log({
-    auth_server_response: authorization_token
-  });
-  try {
-    // ! get access token using authorization token
-    console.log('get in here');
-    const response = await utils.get_access_token(authorization_token);
-    console.log({
-      data: response.data
-    });
-
-    // get access token from payload to obtain the resource
-    const {
-      access_token
-    } = response.data;
-    console.log({
-      data: response.data
-    });
-
-
-    //get user profile data
-    const user = await utils.get_profile_data(access_token);
-    const user_data = user.data;
-    res.send(`
-        <h1> welcome ${user_data.name}</h1>
-        <img src="${user_data.picture}" alt="user_image" />
-      `);
-    console.log(user_data);
-  } catch (error) {
-    console.log(error.message || 'Something wrong happened, try again!');
-    res.sendStatus(500);
-  }
-};
 
 module.exports = {
-  getAuth,
-  getAccessToken,
   getSignup,
   register,
   getLogin,
   userLogin,
-  getUsers,
   signout
 };

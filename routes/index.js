@@ -10,4 +10,7 @@ router.use('/', require('./auth-routes'));
 //connect to the recipes router
 router.use('/recipes', require('./recipes'));
 
+//connect to the users route
+router.use('/users', require('./user'));
+
 module.exports = router;

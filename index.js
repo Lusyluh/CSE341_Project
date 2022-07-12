@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-//connect to the database
 const mongodb = require('./models/connect');
+const session = require('express-session');
+const passport = require("passport");
 
 const app = express();
 const port = process.env.PORT || 8080
+
+const passportSetup = require('./auth/passport-setup');
 
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({extended: false}));
@@ -17,6 +20,17 @@ app.use((req, res, next) => {
 //serve all files inside the views directory
 app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
+
+//sessions
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'SECRET' 
+  }));
+
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //connects to the endpoints under routes folder
 app.use('/', require('./routes'));

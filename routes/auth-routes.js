@@ -18,8 +18,6 @@ router.get('/register', authController.getSignup);
 //router for a create account option
 router.post('/register', authController.register);
 
-//get all registered users
-router.get('/getUsers', authController.getUsers);
 
 //router to get the login form
 router.get('/login', authController.getLogin);
@@ -31,9 +29,14 @@ router.post('/login', authController.userLogin);
 router.get('/logout', authController.signout);
 
 //when user chooses to use google, then render authentication page
-router.get('/auth/google', authController.getAuth);
+router.get('/auth/google', 
+passport.authenticate('google', { scope : ['profile', 'email'] }));
 
 //callback function to access authorization token
-router.get(process.env.REDIRECT_URI, authController.getAccessToken);
+router.get(process.env.REDIRECT_URI,passport.authenticate('google', { failureRedirect: '/login' }),
+function(req, res) {
+  // Successful authentication, redirect success.
+  res.redirect('/success');
+});
 
 module.exports = router;
