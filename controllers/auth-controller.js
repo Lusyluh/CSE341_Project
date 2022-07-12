@@ -96,7 +96,6 @@ const userLogin = async (req, res, next) => {
         error: "User does not exist"
       });
     }
-
   } catch (err) {
     next(err);
   }
@@ -104,10 +103,11 @@ const userLogin = async (req, res, next) => {
 
 
 //user logs out
-const signout = async (req, res) => {
-  req.logout();
-  //res.clearCookie('nToken');
-  return res.redirect('/');
+const signout = async (req, res, next) => {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
 };
 
 module.exports = {

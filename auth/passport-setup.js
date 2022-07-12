@@ -6,7 +6,8 @@ dotenv.config();
 
 
 passport.serializeUser((user, done) => {
-    done(null, user.id);
+    console.log(user);
+    done(null, user._id);
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -23,7 +24,7 @@ passport.use(new googleStrategy({
         callbackURL: process.env.REDIRECT_URI
     },
     async (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
+        //console.log(profile);
         try {
             const user = await mongodb.getDb()
                 .db('recipeBook').collection('users').findOne({

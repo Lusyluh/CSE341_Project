@@ -40,7 +40,7 @@ router.get('/google/redirect',passport.authenticate('google'),
   // Successful authentication, redirect success.
   res.send('you have reached the call back uri');
   //req.send(req.user);
-  //res.redirect('api-docs');
+  res.redirect('/success');
 });
 
 module.exports = router;
