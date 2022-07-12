@@ -15,13 +15,9 @@ const userSchema = new Schema({
     required: true,
     unique: true,
     lowercase: true,
-    validate: (value) => {
-      return validator.isEmail(value)
-  }
     }
-})
+});
 
 //hash the password using bcryptjs
-
 
 module.exports = mongoose.model('User', userSchema)

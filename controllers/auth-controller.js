@@ -1,11 +1,10 @@
 const mongodb = require('../models/connect');
 const bcrypt = require('bcryptjs');
-const salt = bcrypt.genSaltSync(10);
-const hash = bcrypt.hashSync("B4c0/\/", salt);
+const Joi = require('joi');
 const {
   authSchema,
   userSchema
-} = require('../helpers/validation_schema');
+} = require('../middleware/userValidation');
 
 //connects to the utilities folder
 const utils = require('../auth/utils');
@@ -21,11 +20,9 @@ const getSignup = (req, res) => {
 
 //create new user
 const register = async (req, res, next) => {
+
   try {
-    //   const User = await userSchema.validateAsync({
-    //   email: req.body.email,
-    //   password: req.body.password
-    // });
+    //const User = await userSchema.validateAsync(req.body);
 
     const existingUser = await mongodb.getDb()
       .db('recipeBook').collection('users')
@@ -44,7 +41,7 @@ const register = async (req, res, next) => {
         .collection('users')
         .insertOne({
           email: req.body.email,
-          password: hashedPassword
+          password: hashedPassword,
         });
 
       if (newUser) {
@@ -71,41 +68,74 @@ const getLogin = async (req, res) => {
 };
 
 //handle the login - let the user login using email and password
-const userLogin = async (req, res) => {
+const userLogin = async (req, res, next) => {
+  const schema = Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string(),
+  });
+
   try {
-    const result = await mongodb.getDb()
+    //validation
+    const value = await schema.validateAsync(req.body);
+
+    const user = await mongodb.getDb()
       .db('recipeBook')
       .collection('users')
       .findOne({
-        email: req.body.email
-      })
-    //user not found
-    if (!result) {
-      return res.status(404).send({
-        message: "Wrong Username or Password"
+        email: value.email
       });
+    if (user) {
+      // check user password with hashed password stored in the database
+      const validPassword = await bcrypt.compare(value.password, user.password);
+      if (validPassword) {
+        res.status(200).json({
+          message: "Valid password"
+        });
+      } else {
+        res.status(400).json({
+          error: "Invalid Password"
+        });
+      }
     } else {
-      utils.is_logged_in = true;
+      res.status(401).json({
+        error: "User does not exist"
+      });
     }
-    //check the password
-    const hashedPassword = await securePassword(req.body.password);
-    //const isPasswordValid = hashedPassword === req.body.password;
-    const isPasswordValid = async (password, hash) => {
-      const resulting = await bcrypt.compare(req.body.password, result.password);
-  }
-    if (!isPasswordValid) {
-      res.status(403).send({
-        error: 'password incorrect!'
-      })
-    }
+
   } catch (err) {
-    res.status(500).send({
-      error: 'Error has occured while trying to login'
-    })
+    next(err);
   }
+};
 
-}
+//get all the registered users
+const getUsers = async (req, res, next) => {
+	try {
+		const allUsers = await mongodb.getDb()
+    .db('recipeBook')
+    .collection('users').find();
+		if (allUsers) {
+      allUsers.toArray().then((lists) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(lists);});
+			
+		} else {
+			res.status(403);
+			return res.json({message: "Error getting Users"});
+		}
+	} catch (error) {
+		res.status(400);
+		return res.json({error: "Error getting user"});
+	}
+};
 
+//user logs out
+const signout = async (req, res) => {
+  req.logout();
+  //res.clearCookie('nToken');
+  return res.redirect('/');
+};
+
+//authentication
 const getAuth = async (req, res) => {
   try {
     res.redirect(utils.request_get_auth_code_url);
@@ -159,5 +189,7 @@ module.exports = {
   getSignup,
   register,
   getLogin,
-  userLogin
+  userLogin,
+  getUsers,
+  signout
 };
