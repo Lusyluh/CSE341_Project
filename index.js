@@ -1,10 +1,10 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const mongodb = require('./models/connect');
 const cookieSession = require('cookie-session');
 const passport = require("passport");
 
-const app = express();
 const port = process.env.PORT || 8080
 
 const passportSetup = require('./auth/passport-setup');
@@ -21,12 +21,12 @@ app.use((req, res, next) => {
 app.use(express.static(__dirname + "/views"));
 app.set("view engine", "ejs");
 
-//sessions
-app.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'SECRET' 
-  }));
+
+//use the cookie session
+app.use(cookieSession({
+  maxAge: 24*60*60*1000,
+  keys: [process.env.COOKIE_KEY]
+}));
 
 //passport middleware
 app.use(passport.initialize());
