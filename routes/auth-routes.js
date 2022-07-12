@@ -31,7 +31,7 @@ router.post('/login', authController.userLogin);
 router.get('/logout', authController.signout);
 
 //when user chooses to use google, then render authentication page
-router.get('/auth', authController.getAuth);
+router.get('/auth/google', authController.getAuth);
 
 //callback function to access authorization token
 router.get(process.env.REDIRECT_URI, authController.getAccessToken);
