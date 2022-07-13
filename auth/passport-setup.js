@@ -2,7 +2,7 @@ const mongodb = require('../models/connect');
 const dotenv = require("dotenv");
 dotenv.config();
 const passport = require('passport');
-const googleStrategy = require("passport-google-oauth20");
+const GoogleStrategy = require("passport-google-oauth20");
 
 
 
@@ -19,7 +19,7 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
 });
 
-passport.use(new googleStrategy(
+passport.use(new GoogleStrategy(
     {
         clientID: process.env.CLIENT_APP_ID,
         clientSecret: process.env.CLIENT_APP_SECRET,
