@@ -17,12 +17,12 @@ const getSignup = (req, res) => {
 const register = async (req, res, next) => {
 
   try {
-    const value = await userValidation.validateAsync(req.body);
+    //const value = await userValidation.validateAsync(req.body);
 
     const existingUser = await mongodb.getDb()
       .db('recipeBook').collection('users')
       .findOne({
-        email: value.email
+        email: req.body.email
       });
     if (existingUser) {
       res.status(403).json({
