@@ -19,7 +19,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(new googleStrategy({
-        clientID: process.env.CLIENT_APP_ID,
+        clientId: process.env.CLIENT_APP_ID,
         clientSecret: process.env.CLIENT_APP_SECRET,
         callbackURL: process.env.REDIRECT_URI
     },
