@@ -11,7 +11,7 @@
     "https"
   ],
   "paths": {
-    "/api-docs/api-docs": {
+    "/api-docs": {
       "get": {
         "description": "",
         "parameters": [],
@@ -102,7 +102,7 @@
         "responses": {}
       }
     },
-    "/authprocess.env.REDIRECT_URI": {
+    "/auth/google/redirect": {
       "get": {
         "description": "",
         "parameters": [],

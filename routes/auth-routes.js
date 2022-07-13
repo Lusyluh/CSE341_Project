@@ -38,8 +38,7 @@ passport.authenticate('google', { scope : ['profile', 'email'] }));
 router.get('/google/redirect',passport.authenticate('google'),
 (req, res) => {
   // Successful authentication, redirect success.
-  res.send('you have reached the call back uri');
-  //req.send(req.user);
+  //res.send('you have reached the call back uri');
   res.redirect('/success');
 });
 

@@ -14,7 +14,7 @@ passport.deserializeUser(async (id, done) => {
     const user = await mongodb.getDb()
         .db('recipeBook')
         .collection('users')
-        .findById(id)
+        .find(id)
     done(null, user);
 });
 

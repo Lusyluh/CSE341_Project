@@ -13,4 +13,7 @@ router.use('/recipes', require('./recipes'));
 //connect to the users route
 router.use('/users', require('./user'));
 
+//connect to the dashboard or success page
+router.use('/success', require('./login-success'));
+
 module.exports = router;
