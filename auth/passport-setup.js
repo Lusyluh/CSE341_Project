@@ -1,8 +1,9 @@
 const mongodb = require('../models/connect');
-const passport = require('passport');
-const googleStrategy = require("passport-google-oauth20");
 const dotenv = require("dotenv");
 dotenv.config();
+const passport = require('passport');
+const googleStrategy = require("passport-google-oauth20");
+
 
 
 passport.serializeUser((user, done) => {
@@ -18,8 +19,9 @@ passport.deserializeUser(async (id, done) => {
     done(null, user);
 });
 
-passport.use(new googleStrategy({
-        clientId: process.env.CLIENT_APP_ID,
+passport.use(new googleStrategy(
+    {
+        clientID: process.env.CLIENT_APP_ID,
         clientSecret: process.env.CLIENT_APP_SECRET,
         callbackURL: process.env.REDIRECT_URI
     },
